@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Asn2Application {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(Asn2Application.class, args);
 	}
 
