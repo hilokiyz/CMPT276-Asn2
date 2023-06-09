@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User,Integer>{
     //find a list (camel case IS IMPORTANT)
+    List<User> findByName(String name);
     List<User> findByGPA(double GPA);
     List<User> findByHeightAndWeight(int height, int weight);
 }

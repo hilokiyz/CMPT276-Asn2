@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,6 +34,40 @@ public class UserControllers {
         return "users/showAll";
     }
 
+    @GetMapping("/users/view/{uid}")
+    public String getUser(Model model, @PathVariable String uid){
+        System.out.println("Getting user " + uid);
+
+        int id = Integer.parseInt(uid);
+
+        User u = userRepo.findById(id).get();
+
+        //delete person u from database
+        //userRepo.delete(u);
+
+        // update user u to database
+        // userRepo.save(u);
+        
+        model.addAttribute("user");
+        return "showUser";
+    }
+
+    //delete a user
+    @GetMapping("/users/delete/{uid}")
+    public String deleteUser(Model model, @PathVariable String uid, HttpServletResponse response){
+        System.out.println("Getting user " + uid);
+
+        int id = Integer.parseInt(uid);
+
+        User u = userRepo.findById(id).get();
+        userRepo.delete(u);
+
+        //model.addAttribute("user");
+        response.setStatus(201);
+        return "users/deletedUser";
+    }
+
+    //add a new user
     @PostMapping("/users/addUser")
     public String addUser(@RequestParam Map<String, String> newuser, HttpServletResponse response){
         System.out.println("Added user");
