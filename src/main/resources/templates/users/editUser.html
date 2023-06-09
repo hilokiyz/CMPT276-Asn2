@@ -37,33 +37,33 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <h1 class="text-center mt-5 mb-4">New User</h1>
-                <form action="/users/addUser" method="post">
+                <h1 class="text-center mt-5 mb-4">Edit User</h1>
+                <form th:action="@{'/users/editUser/'+${user.uid}}" method="post">
 
                     <div class="mb-3">
 
-                        <input type="text" id="name" name="name" class="form-control form-control-lg" placeholder="Name"
+                        <input type="text" id="name" name="name" class="form-control form-control-lg" placeholder="Name" th:attr="value = ${user.name}"
                             required>
                     </div>
                     <div class="mb-3">
 
                         <input type="number" id="weight" name="weight" class="form-control form-control-lg"
-                            placeholder="Weight" required>
+                            placeholder="Weight" th:attr="value = ${user.weight}" required>
                     </div>
                     <div class="mb-3">
 
                         <input type="number" id="height" name="height" class="form-control form-control-lg"
-                            placeholder="Height" required>
+                            placeholder="Height" th:attr="value = ${user.height}" required>
                     </div>
                     <div class="mb-3">
 
                         <input type="text" id="hairColor" name="hairColor" class="form-control form-control-lg"
-                            placeholder="Hair color" required>
+                            placeholder="Hair color" th:attr="value = ${user.hairColor}" required>
                     </div>
                     <div class="mb-3">
 
                         <input type="number" id="GPA" step=0.01 name="GPA" class="form-control form-control-lg"
-                            placeholder="GPA" required>
+                            placeholder="GPA" th:attr="value = ${user.GPA}" required>
                     </div>
                     <!-- Submit button -->
 

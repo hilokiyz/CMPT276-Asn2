@@ -34,27 +34,46 @@ public class UserControllers {
         return "users/showAll";
     }
 
-    @GetMapping("/users/view/{uid}")
-    public String getUser(Model model, @PathVariable String uid){
+    //get user
+    @GetMapping("/users/edit/{uid}")
+    public String getUser(Model model, @PathVariable String uid, HttpServletResponse response) {
         System.out.println("Getting user " + uid);
 
         int id = Integer.parseInt(uid);
 
         User u = userRepo.findById(id).get();
 
-        //delete person u from database
-        //userRepo.delete(u);
-
         // update user u to database
         // userRepo.save(u);
-        
-        model.addAttribute("user");
-        return "showUser";
+
+        model.addAttribute("user", u);
+        return "users/editUser";
     }
 
-    //delete a user
+    @PostMapping("users/editUser/{uid}")
+    public String editUser(@RequestParam Map<String, String> editedUser, Model model, @PathVariable String uid,
+            HttpServletResponse response) {
+        System.out.println("Editing user");
+
+        int id = Integer.parseInt(uid);
+        User u = userRepo.findById(id).get();
+
+        // set new inputs to that user
+        u.setName(editedUser.get("name"));
+        u.setWeight(Integer.parseInt(editedUser.get("weight")));
+        u.setHeight(Integer.parseInt(editedUser.get("height")));
+        u.setHairColor(editedUser.get("hairColor"));
+        u.setGPA(Double.parseDouble(editedUser.get("GPA")));
+
+        userRepo.save(u);
+
+        response.setStatus(201);
+        return "users/editedUser";
+    }
+
+    // delete a user
     @GetMapping("/users/delete/{uid}")
-    public String deleteUser(Model model, @PathVariable String uid, HttpServletResponse response){
+    public String deleteUser(Model model, @PathVariable String uid, HttpServletResponse response) {
         System.out.println("Getting user " + uid);
 
         int id = Integer.parseInt(uid);
@@ -62,21 +81,21 @@ public class UserControllers {
         User u = userRepo.findById(id).get();
         userRepo.delete(u);
 
-        //model.addAttribute("user");
+        // model.addAttribute("user");
         response.setStatus(201);
         return "users/deletedUser";
     }
 
-    //add a new user
+    // add a new user
     @PostMapping("/users/addUser")
-    public String addUser(@RequestParam Map<String, String> newuser, HttpServletResponse response){
+    public String addUser(@RequestParam Map<String, String> newuser, HttpServletResponse response) {
         System.out.println("Added user");
         String newName = newuser.get("name");
         int newWeight = Integer.parseInt(newuser.get("weight"));
         int newHeight = Integer.parseInt(newuser.get("height"));
         String newHairColor = newuser.get("hairColor");
         double newGPA = Double.parseDouble(newuser.get("GPA"));
-        userRepo.save(new User(newName,newWeight,newHeight,newHairColor,newGPA));
+        userRepo.save(new User(newName, newWeight, newHeight, newHairColor, newGPA));
 
         response.setStatus(201);
         return "users/addedUser";

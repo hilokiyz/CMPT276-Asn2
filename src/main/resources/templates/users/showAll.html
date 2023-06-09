@@ -47,9 +47,13 @@
                             <span th:style="'color:'+${user.hairColor}" th:text="${user.name}"></span> <br>
                             <span th:text="${user.GPA}"></span> <br>
                             <!-- switch case -->
+                            <a role="button" class="btn btn-outline-primary" th:href="@{'./edit/'+${user.uid}}">
+                                edit user
+                            </a>
                             <a role="button" class="btn btn-outline-danger" th:href="@{'./delete/'+${user.uid}}">
                                 delete
                             </a>
+                            
                         </div>
                     </li>
                 </ul>
