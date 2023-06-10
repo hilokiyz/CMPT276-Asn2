@@ -32,31 +32,33 @@
             </div>
         </nav>
     </div>
-    
+
     <!-- display -->
     <main class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <h1>USERS</h1>
-                <ul>
-                    <!-- for loop for each user (to do: wrap in div, set name center, set height/width, set color) -->
-                    <li th:each="user:${userlist}">
-                        <!-- set width + height for each user -->
-                        <div>
-                            <!-- set name and color -->
-                            <span th:style="'color:'+${user.hairColor}" th:text="${user.name}"></span> <br>
-                            <span th:text="${user.GPA}"></span> <br>
-                            <!-- switch case -->
-                            <a role="button" class="btn btn-outline-primary" th:href="@{'./edit/'+${user.uid}}">
-                                edit user
-                            </a>
-                            <a role="button" class="btn btn-outline-danger" th:href="@{'./delete/'+${user.uid}}">
-                                delete
-                            </a>
-                            
-                        </div>
-                    </li>
-                </ul>
+        <div class="d-flex flex-column align-items-center">
+            <h1 class="col-md-4">Students</h1><br>
+            <div class="col-md-4 d-flex flex-row align-items-end flex-wrap">
+
+                <!-- for loop for each user -->
+                <div th:each="user:${userlist}" style="margin:10px">
+                    <!-- set width + height for each user -->
+                    <div class="d-flex flex-column align-items-center" th:style="'margin: 10px; border-style: solid; '"
+                        th:styleappend="'height: '+${user.height*2}+'px; width: '+${user.weight/user.height*20}+'px'">
+                        <!-- set name and color with GPA underneath -->
+                        <span class="align-items-center" th:style="'color:'+${user.hairColor}"
+                            th:text="${user.name}"></span>
+                        <span class="text-center" th:text="${user.GPA}"></span>
+                    </div>
+                    <!-- buttons to edit and delete associated user -->
+                    <div class="d-flex flex-column">
+                        <a role="button" class="btn btn-outline-primary" th:href="@{'./edit/'+${user.uid}}">
+                            Edit User
+                        </a>
+                        <a role="button" class="btn btn-outline-danger" th:href="@{'./delete/'+${user.uid}}">
+                            Delete
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
